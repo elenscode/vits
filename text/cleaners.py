@@ -15,7 +15,7 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
 import re
 from unidecode import unidecode
 from phonemizer import phonemize
-
+from unicodedata import normalize
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
@@ -98,3 +98,9 @@ def english_cleaners2(text):
   phonemes = phonemize(text, language='en-us', backend='espeak', strip=True, preserve_punctuation=True, with_stress=True)
   phonemes = collapse_whitespace(phonemes)
   return phonemes
+
+
+def korean_cleaners(text):
+  text = transliteration_cleaners(text)
+  return normalize('NFD', text)
+  
