@@ -99,8 +99,21 @@ def english_cleaners2(text):
   phonemes = collapse_whitespace(phonemes)
   return phonemes
 
+def lowercase(text):
+    return text.lower()
+
+def collapse_whitespace(text):
+    return re.sub(_whitespace_re, " ", text).strip()
+
+def remove_aux_symbols(text):
+    text = re.sub(r"[\<\>\(\)\[\]\"]+", "", text)
+    return text
 
 def korean_cleaners(text):
-  text = transliteration_cleaners(text)
-  return normalize('NFD', text)
-  
+    text = lowercase(text)
+    #text = transliteration_cleaners(text)
+    text = remove_aux_symbols(text)
+    text = collapse_whitespace(text)
+    text = normalize('NFD', text)
+    return text
+
